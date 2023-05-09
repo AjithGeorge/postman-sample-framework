@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "e1ef834e-ee01-424f-b1cc-c00492bf6f06",
+		"name": "SampleCollection-RestfulApi",
+		"description": "To demonstrate the various capabilities of postman + newman as a node.js project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24100718"
+	},
+	"item": [
+		{
+			"name": "GetListOfObjects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check successful data retrieval\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.expect(responseData.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"    \"type\": \"array\",\r",
+							"    \"items\": {\r",
+							"        \"type\": \"object\",\r",
+							"        \"properties\": {\r",
+							"            \"id\": {\r",
+							"                \"type\": \"string\"\r",
+							"            },\r",
+							"            \"name\": {\r",
+							"                \"type\": \"string\"\r",
+							"            },\r",
+							"            \"data\": {\r",
+							"                \"type\": [\"object\", \"null\"],\r",
+							"                \"properties\": {\r",
+							"                    \"Generation\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Price\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Capacity\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Screen size\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"Color\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Description\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Strap Colour\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Case Size\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"year\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"price\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"CPU model\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Hard disk size\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"generation\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"color\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"capacity GB\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"capacity\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    }\r",
+							"                },\r",
+							"                \"required\": []\r",
+							"            }\r",
+							"        },\r",
+							"        \"required\": [\r",
+							"            \"id\",\r",
+							"            \"name\"\r",
+							"        ]\r",
+							"    }\r",
+							"};\r",
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check response schema\", function () {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/objects",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"objects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetListOfObjectsById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const ids = pm.globals.get('ids');\r",
+							"\r",
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check successful data retrieval\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.expect(responseData.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check data accuracy\", function () {\r",
+							"    var responseData = pm.response.json();\r",
+							"    pm.expect(responseData.length).to.eql(ids.length);\r",
+							"    for (item of responseData) {\r",
+							"        pm.expect(item.id).to.be.oneOf(ids);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var schema = {\r",
+							"    \"type\": \"array\",\r",
+							"    \"items\": {\r",
+							"        \"type\": \"object\",\r",
+							"        \"properties\": {\r",
+							"            \"id\": {\r",
+							"                \"type\": \"string\"\r",
+							"            },\r",
+							"            \"name\": {\r",
+							"                \"type\": \"string\"\r",
+							"            },\r",
+							"            \"data\": {\r",
+							"                \"type\": [\"object\", \"null\"],\r",
+							"                \"properties\": {\r",
+							"                    \"Generation\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Price\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Capacity\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Screen size\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"Color\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Description\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Strap Colour\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Case Size\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"year\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"price\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"CPU model\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"Hard disk size\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"generation\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"color\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"capacity GB\": {\r",
+							"                        \"type\": \"number\"\r",
+							"                    },\r",
+							"                    \"capacity\": {\r",
+							"                        \"type\": \"string\"\r",
+							"                    }\r",
+							"                },\r",
+							"                \"required\": []\r",
+							"            }\r",
+							"        },\r",
+							"        \"required\": [\r",
+							"            \"id\",\r",
+							"            \"name\"\r",
+							"        ]\r",
+							"    }\r",
+							"};\r",
+							"pm.test(\"Test: \" + pm.info.requestName + \"-Check response schema\", function () {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set('ids', ['1', '5', '10']);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/objects?id={{ids}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"objects"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{ids}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.globals.set('baseUrl', \"https://api.restful-api.dev\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
