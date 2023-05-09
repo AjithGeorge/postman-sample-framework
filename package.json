@@ -4,8 +4,7 @@
   "description": "A simple postman collection with in a node js project to extend some of its features, allowing usage of newman and CI/CD integration",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --max-old-space-size=8192"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

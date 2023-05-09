@@ -97,7 +97,8 @@
 							"};\r",
 							"pm.test(\"Test: \" + pm.info.requestName + \"-Check response schema\", function () {\r",
 							"    pm.response.to.have.jsonSchema(schema);\r",
-							"});"
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
